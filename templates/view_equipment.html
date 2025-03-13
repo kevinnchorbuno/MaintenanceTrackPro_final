@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Equipment List</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>QR Code</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipment in equipment_list %}
+            <tr>
+                <td>{{ equipment.id }}</td>
+                <td>{{ equipment.name }}</td>
+                <td>{{ equipment.description }}</td>
+                <td>{% if equipment.image %}<img src="{{ url_for('static', filename='images/' + equipment.image) }}" alt="{{ equipment.name }}" width="100">{% endif %}</td>
+                <td><img src="{{ url_for('qr_code', equipment_id=equipment.id) }}" alt="QR Code" width="100"></td>
+                <td>
+                    <a href="{{ url_for('log_maintenance') }}" class="btn btn-sm btn-success">Log Maintenance</a>
+                    <form action="{{ url_for('report_issue') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="equipment_id" value="{{ equipment.id }}">
+                        <input type="text" name="message" placeholder="Issue" class="form-control d-inline w-50">
+                        <button type="submit" class="btn btn-sm btn-danger">Report</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Machine Health Monitoring</h2>
+<canvas id="healthChart" width="400" height="200"></canvas>
+<script>
+    const ctx = document.getElementById('healthChart').getContext('2d');
+    const healthChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['1s', '2s', '3s', '4s', '5s'],
+            datasets: [{
+                label: 'Machine Health',
+                data: [90, 85, 88, 92, 87],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true, max: 100 }
+            }
+        }
+    });
+</script>
+<a href="javascript:history.back()" class="btn btn-secondary mt-3">Back</a>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ equipment.name }}</h2>
+    <p>{{ equipment.description }}</p>
+    {% if equipment.image %}
+        <img src="{{ url_for('static', filename='images/' + equipment.image) }}" alt="{{ equipment.name }}" class="img-fluid mb-3">
+    {% endif %}
+    <img src="{{ url_for('qr_code', equipment_id=equipment.id) }}" alt="QR Code" class="img-fluid mb-3">
+    <form action="{{ url_for('report_issue') }}" method="POST">
+        <input type="hidden" name="equipment_id" value="{{ equipment.id }}">
+        <div class="mb-3">
+            <label class="form-label">Report an Issue</label>
+            <input type="text" name="message" class="form-control" placeholder="Describe the issue">
+        </div>
+        <button type="submit" class="btn btn-danger">Report Issue</button>
+    </form>
+</div>
+{% endblock %}

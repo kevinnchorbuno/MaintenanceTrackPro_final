@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Activity Monitor - MaintenanceTrackPro{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Activity Monitor</h2>
+<p>View all maintenance activities logged by employees.</p>
+
+<!-- Maintenance Logs Table -->
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Equipment</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Submitted By</th>
+            <th>Description</th>
+            <th>Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.id }}</td>
+            <td>{{ log.equipment.name }}</td>
+            <td>{{ log.type }}</td>
+            <td>{{ log.date.strftime('%Y-%m-%d') }}</td>
+            <td>{{ log.user.username }}</td>
+            <td>{{ log.description }}</td>
+            <td>{{ log.cost if log.cost else 'N/A' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

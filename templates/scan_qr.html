@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Scan QR Code</h2>
+    <div id="video-container">
+        <video id="qr-video" autoplay playsinline></video>
+        <div class="scan-overlay"></div>
+    </div>
+    <form id="qr-form" action="{{ url_for('process_qr') }}" method="POST" style="display: none;">
+        <input type="hidden" name="qr_data" id="qr-data">
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+<script>
+    const video = document.getElementById('qr-video');
+    const qrForm = document.getElementById('qr-form');
+    const qrDataInput = document.getElementById('qr-data');
+
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(stream => {
+            video.srcObject = stream;
+            video.play();
+            scanQRCode();
+        })
+        .catch(err => {
+            console.error('Error accessing camera:', err);
+            alert('Could not access camera. Please allow camera permissions.');
+        });
+
+    function scanQRCode() {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+
+        function tick() {
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code) {
+                    qrDataInput.value = code.data;
+                    qrForm.submit();
+                    return;
+                }
+            }
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Scheduled Maintenance</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Equipment</th>
+                <th>Description</th>
+                <th>Scheduled Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for schedule in schedules %}
+            <tr>
+                <td>{{ schedule.equipment.name }}</td>
+                <td>{{ schedule.description }}</td>
+                <td>{{ schedule.scheduled_date.strftime('%Y-%m-%d') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

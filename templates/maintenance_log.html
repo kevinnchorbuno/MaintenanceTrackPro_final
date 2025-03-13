@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Log Maintenance - MaintenanceTrackPro{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Log Maintenance</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('log_maintenance') }}">
+            <div class="mb-3">
+                <label for="equipment" class="form-label">Equipment</label>
+                <select class="form-select" id="equipment" name="equipment" required>
+                    <option value="">Select Equipment</option>
+                    {% for eq in equipment_list %}
+                        <option value="{{ eq.id }}">{{ eq.name }} ({{ eq.type }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="type" class="form-label">Maintenance Type</label>
+                <select class="form-select" id="type" name="type" required>
+                    <option value="">Select Type</option>
+                    <option value="repair">Repair</option>
+                    <option value="inspection">Inspection</option>
+                    <option value="calibration">Calibration</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="cost" class="form-label">Cost (optional)</label>
+                <input type="number" class="form-control" id="cost" name="cost" step="0.01">
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">Log Maintenance</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

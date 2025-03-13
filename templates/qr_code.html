@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>QR Code for {{ equipment.name }}</h2>
+<img src="{{ url_for('static', filename='images/' + equipment.qr_code) }}" alt="QR Code" class="mb-3">
+<p>Scan this QR code to view equipment details or report an issue.</p>
+<h3>Scan a QR Code</h3>
+<video id="qr-video" width="300" height="300" class="mb-3"></video>
+<script>
+    const video = document.getElementById('qr-video');
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(stream => {
+            video.srcObject = stream;
+            video.play();
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            setInterval(() => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code) {
+                    window.location.href = code.data;  // Redirect to scanned URL
+                }
+            }, 1000);
+        }).catch(err => console.error('Camera access denied:', err));
+</script>
+<a href="{{ url_for('equipment') }}" class="btn btn-secondary mt-3">Back to Equipment</a>
+{% endblock %}

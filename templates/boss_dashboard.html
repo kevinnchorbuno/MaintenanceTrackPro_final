@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Boss Dashboard</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-users fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Manage Users</h5>
+                    <a href="{{ url_for('user_management') }}" class="btn btn-outline-primary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-tools fa-3x mb-3 text-success"></i>
+                    <h5 class="card-title">View Equipment</h5>
+                    <a href="{{ url_for('view_equipment') }}" class="btn btn-outline-success">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-bell fa-3x mb-3 text-warning"></i>
+                    <h5 class="card-title">Notifications</h5>
+                    <a href="{{ url_for('notifications') }}" class="btn btn-outline-warning">View</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-plus fa-3x mb-3 text-info"></i>
+                    <h5 class="card-title">Add Equipment</h5>
+                    <a href="{{ url_for('add_equipment') }}" class="btn btn-outline-info">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-calendar fa-3x mb-3 text-secondary"></i>
+                    <h5 class="card-title">Schedule Maintenance</h5>
+                    <a href="{{ url_for('schedule_maintenance') }}" class="btn btn-outline-secondary">Go</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-qrcode fa-3x mb-3 text-dark"></i>
+                    <h5 class="card-title">Scan QR Code</h5>
+                    <a href="{{ url_for('scan_qr') }}" class="btn btn-outline-dark">Go</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

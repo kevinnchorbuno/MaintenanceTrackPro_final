@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Equipment Management</h2>
+<form method="POST" enctype="multipart/form-data" class="mb-4">
+    <div class="mb-3">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea name="description" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label>Image</label>
+        <input type="file" name="image" class="form-control" accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary">Add Equipment</button>
+</form>
+<h3>Existing Equipment</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>QR Code</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for equipment in equipment_list %}
+        <tr>
+            <td>{{ equipment.id }}</td>
+            <td>{{ equipment.name }}</td>
+            <td>{{ equipment.description }}</td>
+            <td>
+                {% if equipment.image %}
+                <img src="{{ url_for('static', filename='images/' + equipment.image) }}" alt="{{ equipment.name }}" width="100">
+                {% else %}
+                No Image
+                {% endif %}
+            </td>
+            <td>
+                {% if equipment.qr_code %}
+                <a href="{{ url_for('qr_code', equipment_id=equipment.id) }}" class="btn btn-sm btn-info">View QR</a>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('edit_equipment', equipment_id=equipment.id) }}" class="btn btn-sm btn-warning">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="javascript:history.back()" class="btn btn-secondary mt-3">Back</a>
+{% endblock %}
