@@ -1,0 +1,9 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+SQLAlchemy
+Werkzeug
+Jinja2
+Pillow
+qrcode
+python-dateutil
